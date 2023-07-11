@@ -30,8 +30,10 @@ let elapsedTime = 0;
 
 let boxesActiveColor = {
 	color: "#ff0000",
+	animationSpeed: 0.01,
 };
 gui.addColor(boxesActiveColor, "color");
+gui.add(boxesActiveColor, "animationSpeed", 0, 1, 0.001);
 function effect() {
 	// update the picking ray with the camera and pointer position
 	raycaster.setFromCamera(pointer, camera);
@@ -164,7 +166,10 @@ const tick = () => {
 		.filter(e => e.scale.x === 1.5)
 		.forEach((obj, i) => {
 			console.log(obj);
-			obj.position.z = Math.abs(Math.sin(elapsedTime * 0.5 + i) * 0.1);
+			obj.position.z = Math.abs(
+				Math.sin(elapsedTime * 0.5 + i) *
+					boxesActiveColor.animationSpeed
+			);
 		});
 	// Call tick again on the next frame
 	window.requestAnimationFrame(tick);
