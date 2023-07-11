@@ -1,5 +1,8 @@
+import * as dat from "lil-gui";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+const gui = new dat.GUI();
+
 THREE.ColorManagement.enabled = false;
 
 /**
@@ -25,6 +28,10 @@ function onPointerMove(event) {
 
 let elapsedTime = 0;
 
+let boxesActiveColor = {
+	color: "#ff0000",
+};
+gui.addColor(boxesActiveColor, "color");
 function effect() {
 	// update the picking ray with the camera and pointer position
 	raycaster.setFromCamera(pointer, camera);
@@ -32,7 +39,7 @@ function effect() {
 	// calculate objects intersecting the picking ray
 	const intersects = raycaster.intersectObjects(boxesGroup.children);
 	for (let i = 0; i < intersects.length; i++) {
-		intersects[i].object.material.color.set(0xff0000);
+		intersects[i].object.material.color.set(boxesActiveColor.color);
 		intersects[i].object.scale.set(1.5, 1.5, 1.5);
 		intersects[i].object.position.z = 0.1;
 	}
