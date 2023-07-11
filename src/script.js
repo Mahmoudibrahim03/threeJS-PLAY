@@ -1,5 +1,5 @@
 import * as THREE from "three";
-
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 THREE.ColorManagement.enabled = false;
 
 /**
@@ -125,8 +125,8 @@ camera.position.z = 0.5;
 scene.add(camera);
 
 // Controls
-// const controls = new OrbitControls(camera, canvas);
-// controls.enableDamping = true;
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true;
 
 /**
  * Renderer
@@ -148,8 +148,7 @@ const tick = () => {
 	const elapsedTime = clock.getElapsedTime();
 
 	// Update controls
-	// controls.update();
-	// effect();
+	controls.update();
 	// Render
 	renderer.render(scene, camera);
 
