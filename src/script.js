@@ -23,6 +23,8 @@ function onPointerMove(event) {
 	pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
 }
 
+let elapsedTime = 0;
+
 function effect() {
 	// update the picking ray with the camera and pointer position
 	raycaster.setFromCamera(pointer, camera);
@@ -143,15 +145,20 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
  * Animate
  */
 const clock = new THREE.Clock();
-
 const tick = () => {
-	const elapsedTime = clock.getElapsedTime();
-
+	elapsedTime = clock.getElapsedTime();
+	// console.log(elapsedTime);
 	// Update controls
 	controls.update();
 	// Render
 	renderer.render(scene, camera);
 
+	boxesGroup.children
+		.filter(e => e.scale.x === 1.5)
+		.forEach((obj, i) => {
+			console.log(obj);
+			obj.position.z = Math.abs(Math.sin(elapsedTime * 0.5 + i) * 0.1);
+		});
 	// Call tick again on the next frame
 	window.requestAnimationFrame(tick);
 	window.requestAnimationFrame(effect);
